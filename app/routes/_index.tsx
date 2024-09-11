@@ -3,6 +3,7 @@ import { json, type ActionFunctionArgs } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { generateJqCommand } from "../utils/anthropic.server";
 import jq from "node-jq";
+import { truncateJSON } from "../utils/util";
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
@@ -13,7 +14,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ error: "Please enter a query" }, { status: 400 });
   }
 
-  let inputJson: string;
+  let inputJson: any;
+  let input: string;
 
   const jsonFile = formData.get("jsonFile") as File | null;
   const jsonInput = formData.get("inputJson") as string;
@@ -21,17 +23,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (jsonFile && jsonFile.size > 0) {
     const fileContent = await jsonFile.text();
     try {
-      // Validate JSON
-      JSON.parse(fileContent);
-      inputJson = fileContent;
+      input = fileContent;
+      inputJson = JSON.parse(fileContent);
     } catch (error) {
       return json({ error: "Invalid JSON file" }, { status: 400 });
     }
   } else if (jsonInput) {
     try {
-      // Validate JSON
-      JSON.parse(jsonInput);
-      inputJson = jsonInput;
+      input = jsonInput;
+      inputJson = JSON.parse(jsonInput);
     } catch (error) {
       return json({ error: "Invalid JSON input" }, { status: 400 });
     }
@@ -39,13 +39,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     return json({ error: "No JSON input provided" }, { status: 400 });
   }
 
-  const jqCommand = await generateJqCommand(inputJson, query);
+  // We truncate the input JSON to avoid larger window context for Anthropic messages
+  // Saves $$$ and speeds up response times
+  const truncatedInputJson = truncateJSON(inputJson, 2);
+  const jqCommand = await generateJqCommand(
+    JSON.stringify(truncatedInputJson),
+    query
+  );
 
   if (!jqCommand) {
     return json({ error: "No command found in response" }, { status: 500 });
   }
 
-  const result = await jq.run(jqCommand, inputJson, {
+  const result = await jq.run(jqCommand, input, {
     input: "string",
     output: "json",
   });
