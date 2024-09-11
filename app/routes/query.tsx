@@ -160,7 +160,7 @@ export default function Index() {
                 htmlFor="inputJson"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                JSON Input
+                Enter JSON
               </label>
               <textarea
                 id="inputJson"
