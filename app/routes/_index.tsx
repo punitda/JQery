@@ -107,9 +107,9 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="max-w-6xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
         <div className="px-6 py-8">
-          <h1 className="text-3xl font-bold text-gray-700 mb-6">JQNL</h1>
+          <h1 className="text-3xl font-bold text-gray-700 mb-6">JQery</h1>
           <fetcher.Form
             method="post"
             encType="multipart/form-data"
@@ -120,7 +120,7 @@ export default function Index() {
                 htmlFor="jsonFile"
                 className="block text-sm font-medium text-gray-700 mb-2"
               >
-                JSON File
+                Upload JSON File
               </label>
               <div className="mt-1 flex items-center">
                 <input
