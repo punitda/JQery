@@ -74,7 +74,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-export default function Index() {
+export default function Query() {
   const [inputJson, setInputJson] = useState("");
   const [query, setQuery] = useState("");
   const [fileName, setFileName] = useState("");
