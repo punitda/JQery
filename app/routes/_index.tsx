@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import { json, type ActionFunctionArgs } from "@remix-run/node";
 import { useFetcher } from "@remix-run/react";
 import { generateJqCommand } from "../utils/anthropic.server";
@@ -77,6 +77,20 @@ export default function Index() {
       setInputJson("");
     }
   };
+
+  const [copySuccess, setCopySuccess] = useState(false);
+
+  const copyToClipboard = useCallback((text: string) => {
+    navigator.clipboard.writeText(text).then(
+      () => {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 2000);
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
@@ -233,7 +247,21 @@ export default function Index() {
           )}
           {fetcher.data && "result" in fetcher.data && (
             <div className="mt-8">
-              <h2 className="text-lg font-medium text-gray-900 mb-4">Output</h2>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-lg font-medium text-gray-900">Output</h2>
+                <button
+                  onClick={() => {
+                    if (fetcher.data && "result" in fetcher.data) {
+                      copyToClipboard(
+                        JSON.stringify(fetcher.data.result, null, 2)
+                      );
+                    }
+                  }}
+                  className="px-3 py-1 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                >
+                  {copySuccess ? "Copied!" : "Copy"}
+                </button>
+              </div>
               <pre className="bg-gray-50 p-4 rounded-md overflow-x-auto text-sm text-gray-900">
                 {JSON.stringify(fetcher.data.result, null, 2)}
               </pre>
