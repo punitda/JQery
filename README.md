@@ -1,40 +1,50 @@
-# Welcome to Remix!
+# JQery
 
-- 📖 [Remix docs](https://remix.run/docs)
+A self-hosted solution to query your JSON in natural language using power of jq and LLMs.
+No more need to learn jq commands to query your JSON. Just use natural english to ask questions to your JSON.
 
-## Development
+## App Intro
 
-Run the dev server:
+TBA
 
-```shellscript
+## App Screenshots
+
+![Query page Screenshot](./app/screenshots/query-page-screenshot.png)
+
+## Requirements
+
+Local Dev
+
+- Node - `>=v20.x.x`
+
+## Local Setup
+
+Pre-requisites
+
+- Node >v20.x.x - recommended to install via some node version manager like [nvm](https://github.com/nvm-sh/nvm) or [n](https://github.com/tj/n)
+
+Once the Node is installed, please run below commands to install and run the app locally
+
+#### 1. Install dependencies:
+
+```sh
+npm install
+```
+
+#### 2. Setup Anthropic API key:
+
+Create `.env` file in the root of the project and add below line
+
+```
+ANTHROPIC_API_KEY=<your-anthropic-api-key>
+```
+
+#### 3. Run app
+
+```sh
 npm run dev
 ```
 
-## Deployment
+## Deploy
 
-First, build your app for production:
-
-```sh
-npm run build
-```
-
-Then run the app in production mode:
-
-```sh
-npm start
-```
-
-Now you'll need to pick a host to deploy it to.
-
-### DIY
-
-If you're familiar with deploying Node applications, the built-in Remix app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-- `build/server`
-- `build/client`
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+TBA
