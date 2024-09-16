@@ -5,7 +5,7 @@ No more need to learn jq commands to query your JSON. Just use natural english t
 
 ## App Intro
 
-TBA
+[![Video](./screenshots/app-intro.gif)](https://www.youtube.com/watch?v=XJu4gJYhdKA)
 
 ## App Screenshots
 
@@ -47,4 +47,6 @@ npm run dev
 
 ## Deploy
 
-TBA
+Check out this video on how to self host this app
+
+[![Video](./screenshots/self-hosting.gif)](https://www.youtube.com/watch?v=g1Qcr6ubGQI)
